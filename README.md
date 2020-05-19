@@ -16,7 +16,7 @@ In this tutorial, we will use Prometheus with the following components:
 
 To set up Prometheus, we need to define two files: 1) `01-docker-compose.yml`, and 2) `01-prometheus.yml`.
 
-01-docker-compose.yml:
+*01-docker-compose.yml:*
 ```
 services:
 
@@ -34,7 +34,7 @@ services:
       retries: 6
     restart: unless-stopped
 ```
-prometheus.yml:
+*01-prometheus.yml:*
 ```
 global:
   scrape_interval:     15s
@@ -46,7 +46,7 @@ scrape_configs:
     static_configs:
     - targets: ['__SERVER_IP_ADDRESS__:9090']
 ```
-Put both files in the same folder. To spin up Prometheus, simply start the containers via docker-compose: `docker-compose up -d`
+Put both files in the same folder. To spin up Prometheus, simply start the containers via docker-compose: `docker-compose -f 01-docker-compose.yml up -d`
 
 Wait for the containers to finish loading, and then, to check whether Prometheus is properly set up, fire up a web browser and go to: `__SERVER_IP_ADDRESS__:9090`
 
