@@ -1,28 +1,23 @@
-# monitoring
+# Monitoring with Prometheus and Grafana
 
-Prometheus is an open-source systems monitoring and alerting toolkit. In this tutorial, we will integrate Prometheus with the following components:
+Prometheus is an open-source systems monitoring and alerting toolkit. It allows us to scrape metrics from and endpoint and publish it to a visualization tool like Grafana.
 
-Grafana
-Brings data together in a way that is both efficient and organized. It allows users to better understand the metrics of their data through queries, informative visualizations and alerts.
+In this tutorial, we will use Prometheus with the following components:
 
-- node exporter
-Exports hardware and OS metrics.
-https://github.com/prometheus/node_exporter
+- **[Grafana](https://grafana.com/grafana/)**: brings data together in a way that is both efficient and organized. It allows users to better understand the metrics of their data through queries, informative visualizations and alerts.
 
-- cAdvisor
-Provides container users an understanding of the resource usage and performance characteristics of their running containers. It is a running daemon that collects, aggregates, processes, and exports information about running containers.
-https://github.com/google/cadvisor
+- **[node exporter](https://github.com/prometheus/node_exporter)**: Exports hardware and OS metrics.
 
-- pushgateway
-Allows ephemeral and batch jobs to expose their metrics to Prometheus. Since these kinds of jobs may not exist long enough to be scraped, they can instead push their metrics to a Pushgateway. The Pushgateway then exposes these metrics to Prometheus.
-https://github.com/prometheus/pushgateway
+- **[cAdvisor](https://github.com/google/cadvisor)**: provides container users an understanding of the resource usage and performance characteristics of their running containers.
 
-Setting up Prometheus in the monitoring server.
+- **[pushgateway](https://github.com/prometheus/pushgateway)**: allows ephemeral and batch jobs to expose their metrics to Prometheus. 
 
-To set up Prometheus, we need two files: 1) docker-compose.yml, and 2) prometheus.yml.
+## Setting up Prometheus in the monitoring server
 
-docker-compose.yml
+To set up Prometheus, we need to define two files: `1) 01-docker-compose.yml`, and 2) `01-prometheus.yml`.
 
+01-docker-compose.yml:
+```
 services:
 
   prometheus:
@@ -38,23 +33,21 @@ services:
       timeout: 10s
       retries: 6
     restart: unless-stopped
-	
-prometheus.yml
-
+```
+prometheus.yml:
+```
+global:
+  scrape_interval:     15s
+  evaluation_interval: 15s
+  
 scrape_configs:
 
   - job_name: 'prometheus'
-    # metrics_path defaults to '/metrics'
-    # scheme defaults to 'http'.
     static_configs:
     - targets: ['__SERVER_IP_ADDRESS__:9090']
-	
-To spin up Prometheus, simply start the containers via docker-compose:
+```
+To spin up Prometheus, simply start the containers via docker-compose: `docker-compose up -d`
 
-docker-compose up -d
+To check whether it is properly set up, fire up a web browser and go to: `__SERVER_IP_ADDRESS__:9090`
 
-To check whether it is properly set up, go to:
-
-__SERVER_IP_ADDRESS__:9090
-
-
+Finally, try scraping some metrics by typing the following query in the query box: `promhttp_metric_handler_requests_total{code="200"}`
