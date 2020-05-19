@@ -46,8 +46,8 @@ scrape_configs:
     static_configs:
     - targets: ['__SERVER_IP_ADDRESS__:9090']
 ```
-To spin up Prometheus, simply start the containers via docker-compose: `docker-compose up -d`
+Put both files in the same folder. To spin up Prometheus, simply start the containers via docker-compose: `docker-compose up -d`
 
-To check whether it is properly set up, fire up a web browser and go to: `__SERVER_IP_ADDRESS__:9090`
+Wait for the containers to finish loading, and then, to check whether Prometheus is properly set up, fire up a web browser and go to: `__SERVER_IP_ADDRESS__:9090`
 
 Finally, try scraping some metrics by typing the following query in the query box: `promhttp_metric_handler_requests_total{code="200"}`
