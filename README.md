@@ -14,7 +14,7 @@ In this tutorial, we will use Prometheus with the following components:
 
 ## Setting up Prometheus in the monitoring server
 
-To set up Prometheus, we need to define two files: `1) 01-docker-compose.yml`, and 2) `01-prometheus.yml`.
+To set up Prometheus, we need to define two files: 1) `01-docker-compose.yml`, and 2) `01-prometheus.yml`.
 
 01-docker-compose.yml:
 ```
